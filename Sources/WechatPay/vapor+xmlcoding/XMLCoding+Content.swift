@@ -11,7 +11,7 @@ import Vapor
 extension XMLDecoder: ContentDecoder {
     
     public func decode<D>(_ decodable: D.Type, from body: ByteBuffer, headers: HTTPHeaders) throws -> D where D : Decodable {
-        guard headers.contentType == .xml || headers.contentType == .plainText else {
+        guard headers.contentType == .xml || headers.contentType == .plainText || headers.contentType == HTTPMediaType(type: "text", subType: "xml") else {
             throw Abort(.unsupportedMediaType)
         }
         let data = body.getData(at: body.readerIndex, length: body.readableBytes) ?? Data()

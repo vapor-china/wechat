@@ -23,7 +23,7 @@ extension WxpayClient {
         }
         
         let signDic = MirrorExt.generateDic(model: resp)
-        let result = WxpaySign.sign(dic: signDic, key: apiKey, signType: signType)
+        let result = try WxpaySign.sign(dic: signDic, key: apiKey, signType: signType)
         if resp.sign != result {
             throw WxpayError(reason: "verfy sign failed")
         }
