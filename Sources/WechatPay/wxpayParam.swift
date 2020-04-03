@@ -111,10 +111,10 @@ extension Dictionary where Key == String, Value == String {
 }
 
 
-struct WxpayAppReqParams: Content {
+public struct WxpayAppReqParams: Content {
     let appid: String
     let noncestr: String
-    let partnerId: String
+    let partnerid: String
     let package = "Sign=WXPay"
     let prepayid: String
     let timestamp: String

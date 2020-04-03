@@ -13,7 +13,7 @@ import Foundation
 //===----------------------------------------------------------------------===//
 
 /// `XMLDecoder` facilitates the decoding of XML into semantic `Decodable` types.
-open class XMLDecoder {
+class XMLDecoder {
     // MARK: Options
     /// The strategy to use for decoding `Date` values.
     public enum DateDecodingStrategy {

@@ -9,7 +9,7 @@ import Vapor
 
 extension WxpayClient {
     
-    func dealwithCallback(req: Request) throws -> WxpayCallbackResp {
+    public func dealwithCallback(req: Request) throws -> WxpayCallbackResp {
         let resp = try req.content.decode(WxpayCallbackResp.self, using: XMLDecoder())
         
         

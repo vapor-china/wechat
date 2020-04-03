@@ -20,7 +20,7 @@ internal struct MissingValue {
     
 }
 
-public struct XMLHeader {
+struct XMLHeader {
     /// the XML standard that the produced document conforms to.
     var version: Double? = nil
     /// the encoding standard used to represent the characters in the produced document.

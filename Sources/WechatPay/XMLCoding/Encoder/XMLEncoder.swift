@@ -13,7 +13,7 @@ import Foundation
 //===----------------------------------------------------------------------===//
 
 /// `XMLEncoder` facilitates the encoding of `Encodable` values into XML.
-open class XMLEncoder {
+class XMLEncoder {
     // MARK: Options
     /// The formatting of the output XML data.
     public struct OutputFormatting : OptionSet {
