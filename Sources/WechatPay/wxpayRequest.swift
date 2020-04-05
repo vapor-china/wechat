@@ -53,4 +53,41 @@ extension WxpayClient {
         })
     }
     
+    public func closeOrder(_ params: WxpayCloseOrderParams, req: Request) throws -> EventLoopFuture<WxpayCloseOrderResp> {
+        
+        return try postWithParam(url: .closeOrder, params: params, req: req).flatMapThrowing { (resp) -> WxpayCloseOrderResp in
+            
+            let result = try resp.content.decode(WxpayCloseOrderResp.self, using: XMLDecoder())
+            
+            if result.sign.isEmpty {
+                throw WxpayError(reason: "verfy sign is empty")
+            }
+            
+            let signDic = MirrorExt.generateDic(model: resp)
+            let sign2 = try WxpaySign.sign(dic: signDic, key: self.apiKey, signType: self.signType)
+            if result.sign != sign2 {
+                throw WxpayError(reason: "verfy sign failed")
+            }
+            return result
+        }
+    }
+    
+    public func refundOrder(_ params: WxpayRefundOrderParams, req: Request) throws -> EventLoopFuture<WxpayRefundOrderResp> {
+        
+        return try postWithParam(url: .refundOrder, params: params, req: req).flatMapThrowing({ (resp) -> WxpayRefundOrderResp in
+            
+            let result = try resp.content.decode(WxpayRefundOrderResp.self, using: XMLDecoder())
+            
+            if result.sign.isEmpty {
+                throw WxpayError(reason: "verfy sign is empty")
+            }
+            
+            let signDic = MirrorExt.generateDic(model: resp)
+            let sign2 = try WxpaySign.sign(dic: signDic, key: self.apiKey, signType: self.signType)
+            if result.sign != sign2 {
+                throw WxpayError(reason: "verfy sign failed")
+            }
+            return result
+        })
+    }
 }
