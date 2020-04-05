@@ -11,10 +11,12 @@ public struct WxpayConst {
     
     public enum Url {
         case unifiedorder
+        case orderquery
         
         var str: String {
             switch self {
             case .unifiedorder: return "https://api.mch.weixin.qq.com/pay/unifiedorder"
+            case .orderquery: return "https://api.mch.weixin.qq.com/pay/orderquery"
             }
         }
     }

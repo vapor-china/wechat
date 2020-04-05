@@ -46,27 +46,12 @@ extension WxpayError: CustomStringConvertible {
 
 extension WxpayClient {
     
-    public func postWithParam(url: WxpayConst.Url, params: WxPayParam, req: Request) throws -> EventLoopFuture<WxpayAppReqParams> {
+     func postWithParam(url: WxpayConst.Url, params: WxParams, req: Request) throws -> EventLoopFuture<ClientResponse> {
         
         let dics = try generateParams(param: params)
         
         return req.client.post(URI(string: url.str)) { req in
             try req.content.encode(dics.xmlString)
-        }.flatMapThrowing { res -> WxpayUnifiedOrderResponse in
-            
-            let result = try res.content.decode(WxpayUnifiedOrderResponse.self, using: XMLDecoder())
-            if result.isSuccess {
-                return result
-            } else {
-                throw WxpayError(reason: result.return_msg)
-            }
-            
-        }.flatMapThrowing { (orderResult) -> (WxpayAppReqParams) in
-            let timestamp = Int(Date().timeIntervalSince1970)
-            var signParam = WxpayAppReqParams(appid: orderResult.appid, noncestr: orderResult.nonce_str, partnerid: orderResult.mch_id, prepayid: orderResult.prepay_id, timestamp: "\(timestamp)")
-            let sign = try WxpaySign.sign(dic: MirrorExt.generateDic(model: signParam), key: self.apiKey, signType: self.signType).uppercased()
-            signParam.sign = sign
-            return signParam
         }
     }
 
