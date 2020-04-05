@@ -32,6 +32,24 @@ extension WxpayClient {
     }
 }
 
+public struct WxpayCallbackReturn {
+    
+    public let OK = """
+                <xml>
+                  <return_code><![CDATA[SUCCESS]]></return_code>
+                  <return_msg><![CDATA[OK]]></return_msg>
+                </xml>
+            """
+    public func NotOK(errMsg: String) -> String {
+        let fail = """
+                       <xml>
+                         <return_code><![CDATA[FAIL]]></return_code>
+                         <return_msg><![CDATA[\(errMsg)]]></return_msg>
+                       </xml>
+                   """
+        return fail
+    }
+}
 
 public struct WxpayCallbackResp: Content {
           
