@@ -8,6 +8,11 @@
 import Vapor
 
 public class WxpayOrderQueryPramas: WxParams {
+    public init(transaction_id: String? = nil, out_trade_no: String? = nil) {
+        self.transaction_id = transaction_id
+        self.out_trade_no = out_trade_no
+    }
+    
     var transaction_id: String?
     var out_trade_no: String?
 }

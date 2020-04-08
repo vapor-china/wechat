@@ -19,7 +19,7 @@ public struct WxpayClient {
     let appId: String
     let mchId: String
     let apiKey: String
-    var isSandBox: Bool
+    var isSandBox: Bool = false
     
     public var signType = WxpayConst.SignType.md5
     

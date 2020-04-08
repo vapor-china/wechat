@@ -8,7 +8,7 @@
 import Vapor
 
 public class WxpayRefundOrderParams: WxParams {
-    public init(transaction_id: String?, out_trade_no: String?, out_refund_no: String, total_fee: Int, refund_fee: Int, refund_fee_type: String?, refund_desc: String?, refund_account: String?, notify_url: String?) {
+    public init(transaction_id: String? = nil, out_trade_no: String? = nil, out_refund_no: String, total_fee: Int, refund_fee: Int, refund_fee_type: String? = nil, refund_desc: String? = nil, refund_account: String? = nil, notify_url: String? = nil) {
         self.transaction_id = transaction_id
         self.out_trade_no = out_trade_no
         self.out_refund_no = out_refund_no
@@ -20,41 +20,41 @@ public class WxpayRefundOrderParams: WxParams {
         self.notify_url = notify_url
     }
     
-    let transaction_id: String?
-    let out_trade_no: String?
-    let out_refund_no: String
-    let total_fee: Int
-    let refund_fee: Int
-    let refund_fee_type: String?
-    let refund_desc: String?
-    let refund_account: String?
-    let notify_url: String?
+    public let transaction_id: String?
+    public let out_trade_no: String?
+    public let out_refund_no: String
+    public let total_fee: Int
+    public let refund_fee: Int
+    public let refund_fee_type: String?
+    public let refund_desc: String?
+    public let refund_account: String?
+    public let notify_url: String?
 }
 
 public struct WxpayRefundOrderResp: Content {
     
-    let return_code: String
-    let return_msg: String?
+    public let return_code: String
+    public let return_msg: String?
     
-    let result_code: String
-    let err_code: String?
-    let err_code_des: String?
-    let appid: String
-    let mch_id: String
-    let nonce_str: String
-    let sign: String
-    let transaction_id: String
-    let out_trade_no: String
-    let out_refund_no: String
-    let refund_id: String
-    let refund_fee: Int
-    let settlement_refund_fee: Int?
-    let total_fee: Int
-    let settlement_total_fee: Int?
-    let fee_type: String?
-    let cash_fee: Int
-    let cash_fee_type: String?
-    let cash_refund_fee: Int?
-    let coupon_refund_fee: Int?
-    let coupon_refund_count: Int?
+    public let result_code: String
+    public let err_code: String?
+    public let err_code_des: String?
+    public let appid: String
+    public let mch_id: String
+    public let nonce_str: String
+    public let sign: String
+    public let transaction_id: String
+    public let out_trade_no: String
+    public let out_refund_no: String
+    public let refund_id: String
+    public let refund_fee: Int
+    public let settlement_refund_fee: Int?
+    public let total_fee: Int
+    public let settlement_total_fee: Int?
+    public let fee_type: String?
+    public let cash_fee: Int
+    public let cash_fee_type: String?
+    public let cash_refund_fee: Int?
+    public let coupon_refund_fee: Int?
+    public let coupon_refund_count: Int?
 }

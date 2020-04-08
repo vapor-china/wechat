@@ -9,22 +9,21 @@
 
 
 
-`WechatPay` is a vapor 4 kit of wechat pay service. It support macOS, Ubuntu. You can use the kit to call wechat pay service. 
+`WechatPay` 是一个基于vapor4的微信支付SDK。支持 macOS, Ubuntu。
 
+[English 📔](README.md)
 
-[中文版🇨🇳](README_CN.md)
-
-## Installation
+## 安装
 
 ### Swift Package Manager
 
-To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
+要使用苹果的 Swift Package Manager 集成，将以下内容作为依赖添加到你的 `Package.swift`：
 
 ```swift
 .package(url: "https://github.com/vapor-china/wechat-pay.git", from: "1.0.0")
 ```
 
-Here's an example `PackageDescription`:
+这里是一个 `PackageDescription` 实例：
 
 ```swift
 // swift-tools-version:5.2
@@ -60,51 +59,50 @@ let package = Package(
 )
 ```
 
-## Usage
+## 使用
 
-### init client
+### 初始化client
 ```swift
         let client = WxpayClient(appId: "your appid", mchId: "you mchId", apiKey: "your mch apiKey")
         
 ```
 
-### unified order
+### 支付预下单
 ```swift
         let param = WxPayUnifiedOrderPramas(out_trade_no: "macos\(Int(Date().timeIntervalSince1970))", body: "vapor test", total_fee: 1, spbill_create_ip: "127.0.0.1", notify_url: "http://notify.objcoding.com/notify", trade_type: .app)
          
         return try client.unifiedOrder(param, req: req)
 ```
 
-### query order result
+### 查询支付结果
 ```swift 
     let param = WxpayOrderQueryPramas(out_trade_no: "your out trade no")
         try client.orderQuery(param, req: req)
 ```
 
-### close order
+### 关闭订单
 ```swift
     let param = WxpayCloseOrderParams(out_trade_no: "your out trade no")
         client.closeOrder(param, req: req)
 ```
 
-### refund order
+### 退款
 ```swift 
     let param = WxpayRefundOrderParams(out_trade_no: "out trade no", out_refund_no: " out refund no", total_fee: 1, refund_fee: 1, refund_fee_type: "", refund_desc: "", refund_account: "", notify_url: "notify url")
         client.refundOrder(param, req: req)
 ```
 
-### notify parse
-router use post
+### 支付回调解析处理
+router请写post请求
 ```swift 
     try client.dealwithCallback(req: req)
-    ······
-    if success {
+
+    if 成功 {
       return WxpayCallbackReturn.OK.encodeResponse(for: req)
     } else {
       return WxpayCallbackReturn.NotOK(errMsg: "msg").encodeResponse(for: req)
     }   
 ```
-
 
 
 ## License
