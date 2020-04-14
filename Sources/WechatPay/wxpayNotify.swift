@@ -7,32 +7,32 @@
 
 import Vapor
 
-extension WxpayClient {
+extension WxPayClient {
     
-    public func dealwithCallback(req: Request) throws -> WxpayCallbackResp {
-        let resp = try req.content.decode(WxpayCallbackResp.self, using: XMLDecoder())
+    public func dealwithCallback(req: Request) throws -> WxPayCallbackResp {
+        let resp = try req.content.decode(WxPayCallbackResp.self, using: XMLDecoder())
         
         
         // verfy sign
         if !resp.isTransactionSuccess {
-            throw WxpayError(reason: "wx pay call back failed")
+            throw WxPayError(reason: "wx pay call back failed")
         }
         
         if resp.sign.isEmpty {
-            throw WxpayError(reason: "verfy sign is empty")
+            throw WxPayError(reason: "verfy sign is empty")
         }
         
         let signDic = MirrorExt.generateDic(model: resp)
-        let result = try WxpaySign.sign(dic: signDic, key: apiKey, signType: signType)
+        let result = try WxPaySign.sign(dic: signDic, key: apiKey, signType: signType)
         if resp.sign != result {
-            throw WxpayError(reason: "verfy sign failed")
+            throw WxPayError(reason: "verfy sign failed")
         }
         
         return resp
     }
 }
 
-public struct WxpayCallbackReturn {
+public struct WxPayCallbackReturn {
     
     public static let OK = """
                 <xml>
@@ -51,7 +51,7 @@ public struct WxpayCallbackReturn {
     }
 }
 
-public struct WxpayCallbackResp: Content {
+public struct WxPayCallbackResp: Content {
           
     let appid: String
     let mch_id: String
@@ -82,11 +82,11 @@ public struct WxpayCallbackResp: Content {
     let return_code: String
     let return_msg: String?
 }
-extension WxpayCallbackResp {
+extension WxPayCallbackResp {
     var SUCCESS_KEY: String { "SUCCESS" }
     var FAIL_KEY: String { "FAIL" }
 }
-extension WxpayCallbackResp {
+extension WxPayCallbackResp {
     
     var isConnectSuccess: Bool {
         return return_code == SUCCESS_KEY

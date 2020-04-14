@@ -7,9 +7,9 @@
 
 import Vapor
 
-public typealias WxpayCloseOrderParams = WxPayParam
+public typealias WxPayCloseOrderParams = WxPayParam
 
-public struct WxpayCloseOrderResp: Content {
+public struct WxPayCloseOrderResp: Content {
     public let return_code: String
     public let return_msg: String?
     

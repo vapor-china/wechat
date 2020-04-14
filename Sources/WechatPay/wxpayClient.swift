@@ -8,7 +8,7 @@
 import Vapor
 import AsyncHTTPClient
 
-public struct WxpayClient {
+public struct WxPayClient {
     public init(appId: String, mchId: String, apiKey: String, isSandBox: Bool = false) {
         self.appId = appId
         self.mchId = mchId
@@ -21,32 +21,15 @@ public struct WxpayClient {
     let apiKey: String
     var isSandBox: Bool = false
     
-    public var signType = WxpayConst.SignType.md5
+    public var signType = WxPayConst.SignType.md5
     
     public var httpConnectTimeout: Int64 = 3
     public var httpReadTimeout: Int64  = 1
 }
 
-public struct WxpayError: Error {
+extension WxPayClient {
     
-    var reason: String
-    
-    init(reason: String) {
-        self.reason = reason
-    }
-    
-}
-
-extension WxpayError: CustomStringConvertible {
-    public var description: String {
-        return "the reason is: \(reason)"
-    }
-}
-
-
-extension WxpayClient {
-    
-     func postWithParam(url: WxpayConst.Url, params: WxParams, req: Request) throws -> EventLoopFuture<ClientResponse> {
+    func postWithParam<P: WxParams>(url: WxPayConst.Url, params: P, req: Request) throws -> EventLoopFuture<ClientResponse> {
         
         let dics = try generateParams(param: params)
         
@@ -57,61 +40,3 @@ extension WxpayClient {
 
 }
 
-// test
-extension WxpayClient {
-        
-        func postWithParamDDD(url: WxpayConst.Url, params: WxPayParam) throws {
-            
-//            guard let loop = AppEventLoopGroup else { throw WxpayError(reason: "app event loop not exist") }
-            
-            let dics = try generateParams(param: params)
-            
-    //        let timeout = HTTPClient.Configuration.Timeout(connect: .seconds(httpConnectTimeout), read: .seconds(httpReadTimeout))
-    //        let client = HTTPClient(eventLoopGroupProvider: .createNew)
-            let client = HTTPClient(eventLoopGroupProvider: .createNew)
-            defer {
-                try? client.syncShutdown()
-            }
-            var request = try HTTPClient.Request(url: url.str, method: .POST)
-            request.headers.add(name: HTTPHeaders.Name.contentType, value: "application/xml; charset=utf-8")
-            request.body = .string(dics.xmlString)
-            
-            client.get(url: "http://api-test.szyimaikeji.com/user/me").whenComplete { (result) in
-                print(result)
-                switch result {
-                case .failure(let err):
-                    print(err)
-                case .success(let resp):
-                    print(resp)
-                }
-            }
-            
-    //        client.execute(request: request).whenComplete { (result) in
-    //            switch result {
-    //            case .failure(let error):
-    //                print("error -----")
-    //                print(error)
-    //            case .success(let resp):
-    //                if resp.status == .ok {
-    //                    print("ok -----")
-    //                    print(resp)
-    //                    if let body = resp.body {
-    //                        let data = body.getData(at: body.readerIndex, length: body.readableBytes)
-    //                        if let data = data {
-    //                            print(data)
-    //                            let str = String(data: data, encoding: .utf8)
-    //                            print(str ?? "convert data to str failure, line -- 60")
-    //                        }
-    //                    }
-    //                } else {
-    //                    print("failure -----")
-    //                    print(resp)
-    //                }
-    //            }
-    //
-    //
-    //        }
-    //        try? client.syncShutdown()
-    //        client.syncShutdown()
-        }
-}

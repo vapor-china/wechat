@@ -9,7 +9,7 @@ import Vapor
 
 public class WxPayUnifiedOrderPramas: WxPayParam {
     
-public init(out_trade_no: String, device_info: String? = nil, body: String, detail: String? = nil, attach: String? = nil, fee_type: String? = nil, total_fee: Int, spbill_create_ip: String, time_start: String? = nil, time_expire: String? = nil, goods_tag: String? = nil, notify_url: String, trade_type: WxpayConst.TradeType, limit_pay: String? = nil, receipt: String? = nil) {
+public init(out_trade_no: String, device_info: String? = nil, body: String, detail: String? = nil, attach: String? = nil, fee_type: String? = nil, total_fee: Int, spbill_create_ip: String, time_start: String? = nil, time_expire: String? = nil, goods_tag: String? = nil, notify_url: String, trade_type: WxPayConst.TradeType, limit_pay: String? = nil, receipt: String? = nil) {
         self.device_info = device_info
         self.body = body
         self.detail = detail
@@ -46,7 +46,7 @@ public init(out_trade_no: String, device_info: String? = nil, body: String, deta
 }
 
 
-public struct WxpayAppReqParams: Content {
+public struct WxPayAppReqParams: Content {
     public let appid: String
     public let noncestr: String
     public let partnerid: String

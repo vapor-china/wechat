@@ -7,18 +7,18 @@
 
 import Foundation
 
-public struct WxpayConst {
+public struct WxPayConst {
     
     public enum Url {
-        case unifiedorder
-        case orderquery
+        case unifiedOrder
+        case orderQuery
         case closeOrder
         case refundOrder
         
         var str: String {
             switch self {
-            case .unifiedorder: return "https://api.mch.weixin.qq.com/pay/unifiedorder"
-            case .orderquery: return "https://api.mch.weixin.qq.com/pay/orderquery"
+            case .unifiedOrder: return "https://api.mch.weixin.qq.com/pay/unifiedorder"
+            case .orderQuery: return "https://api.mch.weixin.qq.com/pay/orderquery"
             case .closeOrder: return "https://api.mch.weixin.qq.com/pay/closeorder"
             case .refundOrder: return "https://api.mch.weixin.qq.com/secapi/pay/refund"
             }

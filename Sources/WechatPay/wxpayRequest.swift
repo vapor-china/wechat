@@ -7,85 +7,85 @@
 
 import Vapor
 
-extension WxpayClient {
+extension WxPayClient {
     
-    public func unifiedOrder(_ pramas: WxPayUnifiedOrderPramas, req: Request) throws -> EventLoopFuture<WxpayAppReqParams> {
+    public func unifiedOrder(_ pramas: WxPayUnifiedOrderPramas, req: Request) throws -> EventLoopFuture<WxPayAppReqParams> {
         
-        return try postWithParam(url: .unifiedorder, params: pramas, req: req).flatMapThrowing { res -> WxpayUnifiedOrderResponse in
+        return try postWithParam(url: .unifiedOrder, params: pramas, req: req).flatMapThrowing { res -> WxPayUnifiedOrderResponse in
             
-            let result = try res.content.decode(WxpayUnifiedOrderResponse.self, using: XMLDecoder())
+            let result = try res.content.decode(WxPayUnifiedOrderResponse.self, using: XMLDecoder())
             if result.isSuccess {
                 return result
             } else {
-                throw WxpayError(reason: result.return_msg)
+                throw WxPayError(reason: result.return_msg)
             }
             
-        }.flatMapThrowing { (orderResult) -> (WxpayAppReqParams) in
+        }.flatMapThrowing { (orderResult) -> (WxPayAppReqParams) in
             let timestamp = Int(Date().timeIntervalSince1970)
-            var signParam = WxpayAppReqParams(appid: orderResult.appid, noncestr: orderResult.nonce_str, partnerid: orderResult.mch_id, prepayid: orderResult.prepay_id, timestamp: "\(timestamp)")
-            let sign = try WxpaySign.sign(dic: MirrorExt.generateDic(model: signParam), key: self.apiKey, signType: self.signType).uppercased()
+            var signParam = WxPayAppReqParams(appid: orderResult.appid, noncestr: orderResult.nonce_str, partnerid: orderResult.mch_id, prepayid: orderResult.prepay_id, timestamp: "\(timestamp)")
+            let sign = try WxPaySign.sign(dic: MirrorExt.generateDic(model: signParam), key: self.apiKey, signType: self.signType).uppercased()
             signParam.sign = sign
             return signParam
         }
     }
     
-    public func orderQuery(_ pramas: WxpayOrderQueryPramas, req: Request) throws -> EventLoopFuture<WxpayOrderQueryResp> {
+    public func orderQuery(_ pramas: WxPayOrderQueryPramas, req: Request) throws -> EventLoopFuture<WxPayOrderQueryResp> {
         
-        return try postWithParam(url: .orderquery, params: pramas, req: req).flatMapThrowing({ (resp) -> WxpayOrderQueryResp in
-            let  result = try resp.content.decode(WxpayCallbackResp.self, using: XMLDecoder())
+        return try postWithParam(url: .orderQuery, params: pramas, req: req).flatMapThrowing({ (resp) -> WxPayOrderQueryResp in
+            let  result = try resp.content.decode(WxPayCallbackResp.self, using: XMLDecoder())
             
             
             // verfy sign
             if !result.isTransactionSuccess {
-                throw WxpayError(reason: "wx pay order query failed")
+                throw WxPayError(reason: "wx pay order query failed")
             }
             
             if result.sign.isEmpty {
-                throw WxpayError(reason: "verfy sign is empty")
+                throw WxPayError(reason: "verfy sign is empty")
             }
             
             let signDic = MirrorExt.generateDic(model: resp)
-            let sign2 = try WxpaySign.sign(dic: signDic, key: self.apiKey, signType: self.signType)
+            let sign2 = try WxPaySign.sign(dic: signDic, key: self.apiKey, signType: self.signType)
             if result.sign != sign2 {
-                throw WxpayError(reason: "verfy sign failed")
+                throw WxPayError(reason: "verfy sign failed")
             }
             return result
         })
     }
     
-    public func closeOrder(_ params: WxpayCloseOrderParams, req: Request) throws -> EventLoopFuture<WxpayCloseOrderResp> {
+    public func closeOrder(_ params: WxPayCloseOrderParams, req: Request) throws -> EventLoopFuture<WxPayCloseOrderResp> {
         
-        return try postWithParam(url: .closeOrder, params: params, req: req).flatMapThrowing { (resp) -> WxpayCloseOrderResp in
+        return try postWithParam(url: .closeOrder, params: params, req: req).flatMapThrowing { (resp) -> WxPayCloseOrderResp in
             
-            let result = try resp.content.decode(WxpayCloseOrderResp.self, using: XMLDecoder())
+            let result = try resp.content.decode(WxPayCloseOrderResp.self, using: XMLDecoder())
             
             if result.sign.isEmpty {
-                throw WxpayError(reason: "verfy sign is empty")
+                throw WxPayError(reason: "verfy sign is empty")
             }
             
             let signDic = MirrorExt.generateDic(model: resp)
-            let sign2 = try WxpaySign.sign(dic: signDic, key: self.apiKey, signType: self.signType)
+            let sign2 = try WxPaySign.sign(dic: signDic, key: self.apiKey, signType: self.signType)
             if result.sign != sign2 {
-                throw WxpayError(reason: "verfy sign failed")
+                throw WxPayError(reason: "verfy sign failed")
             }
             return result
         }
     }
     
-    public func refundOrder(_ params: WxpayRefundOrderParams, req: Request) throws -> EventLoopFuture<WxpayRefundOrderResp> {
+    public func refundOrder(_ params: WxPayRefundOrderParams, req: Request) throws -> EventLoopFuture<WxPayRefundOrderResp> {
         
-        return try postWithParam(url: .refundOrder, params: params, req: req).flatMapThrowing({ (resp) -> WxpayRefundOrderResp in
+        return try postWithParam(url: .refundOrder, params: params, req: req).flatMapThrowing({ (resp) -> WxPayRefundOrderResp in
             
-            let result = try resp.content.decode(WxpayRefundOrderResp.self, using: XMLDecoder())
+            let result = try resp.content.decode(WxPayRefundOrderResp.self, using: XMLDecoder())
             
             if result.sign.isEmpty {
-                throw WxpayError(reason: "verfy sign is empty")
+                throw WxPayError(reason: "verfy sign is empty")
             }
             
             let signDic = MirrorExt.generateDic(model: resp)
-            let sign2 = try WxpaySign.sign(dic: signDic, key: self.apiKey, signType: self.signType)
+            let sign2 = try WxPaySign.sign(dic: signDic, key: self.apiKey, signType: self.signType)
             if result.sign != sign2 {
-                throw WxpayError(reason: "verfy sign failed")
+                throw WxPayError(reason: "verfy sign failed")
             }
             return result
         })

@@ -26,7 +26,7 @@ extension WxParams {
         let tims = Date().timeIntervalSince1970
         let uuidStr = UUID().uuidString + "\(tims)"
         if let uuidData = uuidStr.data(using: .utf8) {
-            return WxpaySign.encodeWithMD5(content: uuidData.base64EncodedString())
+            return WxPaySign.encodeWithMD5(content: uuidData.base64EncodedString())
         } else {
             return nil
         }
@@ -38,9 +38,9 @@ extension WxParams {
     }
 
 }
-extension WxpayClient {
+extension WxPayClient {
     
-    func generateParams(param: WxParams) throws -> [String: String] {
+    func generateParams<T: WxParams>(param: T) throws -> [String: String] {
         
         var dics = MirrorExt.generateDic(model: param)
         
@@ -52,7 +52,7 @@ extension WxpayClient {
         }
         dics["nonce_str"] = nonceStr
         
-       let sign = try WxpaySign.sign(dic: dics, key: apiKey, signType: signType)
+       let sign = try WxPaySign.sign(dic: dics, key: apiKey, signType: signType)
         
         dics["sign"] = sign
         

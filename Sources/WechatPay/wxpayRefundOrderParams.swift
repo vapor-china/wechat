@@ -7,7 +7,7 @@
 
 import Vapor
 
-public class WxpayRefundOrderParams: WxParams {
+public class WxPayRefundOrderParams: WxParams {
     public init(transaction_id: String? = nil, out_trade_no: String? = nil, out_refund_no: String, total_fee: Int, refund_fee: Int, refund_fee_type: String? = nil, refund_desc: String? = nil, refund_account: String? = nil, notify_url: String? = nil) {
         self.transaction_id = transaction_id
         self.out_trade_no = out_trade_no
@@ -31,7 +31,7 @@ public class WxpayRefundOrderParams: WxParams {
     public let notify_url: String?
 }
 
-public struct WxpayRefundOrderResp: Content {
+public struct WxPayRefundOrderResp: Content {
     
     public let return_code: String
     public let return_msg: String?

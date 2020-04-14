@@ -6,15 +6,12 @@
 //
 
 import Foundation
-#if os(Linux)
 import Crypto
-#else
-import CryptoKit
-#endif
 
-public struct WxpaySign {
+
+public struct WxPaySign {
     
-    public static func sign(dic: [String: String], key: String, signType: WxpayConst.SignType) throws -> String {
+    public static func sign(dic: [String: String], key: String, signType: WxPayConst.SignType) throws -> String {
 
         let signStr = generateSignStr(dic: dic)
         
@@ -31,7 +28,7 @@ public struct WxpaySign {
         }
         
         guard !sign.isEmpty else {
-            throw WxpayError(reason: "sign failure")
+            throw WxPayError(reason: "sign failure")
         }
         
         return sign
@@ -40,7 +37,7 @@ public struct WxpaySign {
      
 }
 
-extension WxpaySign {
+extension WxPaySign {
     static func encodeWithMD5(content: String) -> String {
         let digest = Insecure.MD5.hash(data: Data(content.utf8))
         let str = digest.map { String(format: "%02hhx", $0) }.joined().uppercased()

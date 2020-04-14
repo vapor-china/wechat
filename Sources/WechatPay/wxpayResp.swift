@@ -7,7 +7,7 @@
 
 import Vapor
 
-struct WxpayUnifiedOrderResponse: Content {
+struct WxPayUnifiedOrderResponse: Content {
     
         let return_code: String
         let return_msg: String
@@ -21,7 +21,7 @@ struct WxpayUnifiedOrderResponse: Content {
       
 }
 
-extension WxpayUnifiedOrderResponse {
+extension WxPayUnifiedOrderResponse {
     
     var isSuccess: Bool {
         return result_code == "SUCCESS"
