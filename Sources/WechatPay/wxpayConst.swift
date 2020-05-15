@@ -14,6 +14,10 @@ public struct WxPayConst {
         case orderQuery
         case closeOrder
         case refundOrder
+        case oauth2Access
+        case refreshATk
+        case checkATK
+        case userInfo
         
         var str: String {
             switch self {
@@ -21,6 +25,10 @@ public struct WxPayConst {
             case .orderQuery: return "https://api.mch.weixin.qq.com/pay/orderquery"
             case .closeOrder: return "https://api.mch.weixin.qq.com/pay/closeorder"
             case .refundOrder: return "https://api.mch.weixin.qq.com/secapi/pay/refund"
+            case .oauth2Access: return "https://api.weixin.qq.com/sns/oauth2/access_token"
+            case .refreshATk: return "https://api.weixin.qq.com/sns/oauth2/refresh_token"
+            case .checkATK: return "https://api.weixin.qq.com/sns/auth"
+            case .userInfo: return "https://api.weixin.qq.com/sns/userinfo"
             }
         }
     }

@@ -52,7 +52,7 @@ extension WxPayClient {
         }
         dics["nonce_str"] = nonceStr
         
-       let sign = try WxPaySign.sign(dic: dics, key: apiKey, signType: signType)
+       let sign = try WxPaySign.sign(dic: dics, key: mchSecret, signType: signType)
         
         dics["sign"] = sign
         

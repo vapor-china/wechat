@@ -9,16 +9,18 @@ import Vapor
 import AsyncHTTPClient
 
 public struct WxPayClient {
-    public init(appId: String, mchId: String, apiKey: String, isSandBox: Bool = false) {
+    public init(appId: String, appSecret: String, mchId: String, mchSecret: String, isSandBox: Bool = false) {
         self.appId = appId
         self.mchId = mchId
-        self.apiKey = apiKey
+        self.appSecret = appSecret
+        self.mchSecret = mchSecret
         self.isSandBox = isSandBox
     }
     
     let appId: String
+    let appSecret: String
     let mchId: String
-    let apiKey: String
+    let mchSecret: String
     var isSandBox: Bool = false
     
     public var signType = WxPayConst.SignType.md5

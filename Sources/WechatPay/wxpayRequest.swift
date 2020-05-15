@@ -9,6 +9,7 @@ import Vapor
 
 extension WxPayClient {
     
+    // 统一下单
     public func unifiedOrder(_ pramas: WxPayUnifiedOrderPramas, req: Request) throws -> EventLoopFuture<WxPayAppReqParams> {
         
         return try postWithParam(url: .unifiedOrder, params: pramas, req: req).flatMapThrowing { res -> WxPayUnifiedOrderResponse in
@@ -23,12 +24,12 @@ extension WxPayClient {
         }.flatMapThrowing { (orderResult) -> (WxPayAppReqParams) in
             let timestamp = Int(Date().timeIntervalSince1970)
             var signParam = WxPayAppReqParams(appid: orderResult.appid, noncestr: orderResult.nonce_str, partnerid: orderResult.mch_id, prepayid: orderResult.prepay_id, timestamp: "\(timestamp)")
-            let sign = try WxPaySign.sign(dic: MirrorExt.generateDic(model: signParam), key: self.apiKey, signType: self.signType).uppercased()
+            let sign = try WxPaySign.sign(dic: MirrorExt.generateDic(model: signParam), key: self.mchSecret, signType: self.signType).uppercased()
             signParam.sign = sign
             return signParam
         }
     }
-    
+    // 订单查询
     public func orderQuery(_ pramas: WxPayOrderQueryPramas, req: Request) throws -> EventLoopFuture<WxPayOrderQueryResp> {
         
         return try postWithParam(url: .orderQuery, params: pramas, req: req).flatMapThrowing({ (resp) -> WxPayOrderQueryResp in
@@ -45,14 +46,14 @@ extension WxPayClient {
             }
             
             let signDic = MirrorExt.generateDic(model: resp)
-            let sign2 = try WxPaySign.sign(dic: signDic, key: self.apiKey, signType: self.signType)
+            let sign2 = try WxPaySign.sign(dic: signDic, key: self.mchSecret, signType: self.signType)
             if result.sign != sign2 {
                 throw WxPayError(reason: "verfy sign failed")
             }
             return result
         })
     }
-    
+    // 关闭订单
     public func closeOrder(_ params: WxPayCloseOrderParams, req: Request) throws -> EventLoopFuture<WxPayCloseOrderResp> {
         
         return try postWithParam(url: .closeOrder, params: params, req: req).flatMapThrowing { (resp) -> WxPayCloseOrderResp in
@@ -64,14 +65,14 @@ extension WxPayClient {
             }
             
             let signDic = MirrorExt.generateDic(model: resp)
-            let sign2 = try WxPaySign.sign(dic: signDic, key: self.apiKey, signType: self.signType)
+            let sign2 = try WxPaySign.sign(dic: signDic, key: self.mchSecret, signType: self.signType)
             if result.sign != sign2 {
                 throw WxPayError(reason: "verfy sign failed")
             }
             return result
         }
     }
-    
+    // 退款
     public func refundOrder(_ params: WxPayRefundOrderParams, req: Request) throws -> EventLoopFuture<WxPayRefundOrderResp> {
         
         return try postWithParam(url: .refundOrder, params: params, req: req).flatMapThrowing({ (resp) -> WxPayRefundOrderResp in
@@ -83,7 +84,7 @@ extension WxPayClient {
             }
             
             let signDic = MirrorExt.generateDic(model: resp)
-            let sign2 = try WxPaySign.sign(dic: signDic, key: self.apiKey, signType: self.signType)
+            let sign2 = try WxPaySign.sign(dic: signDic, key: self.mchSecret, signType: self.signType)
             if result.sign != sign2 {
                 throw WxPayError(reason: "verfy sign failed")
             }
