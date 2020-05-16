@@ -18,12 +18,12 @@ extension WxPayClient {
             if result.isSuccess {
                 return result
             } else {
-                throw WxPayError(reason: result.return_msg)
+                throw WxPayError(reason: result.returnMsg)
             }
             
         }.flatMapThrowing { (orderResult) -> (WxPayAppReqParams) in
             let timestamp = Int(Date().timeIntervalSince1970)
-            var signParam = WxPayAppReqParams(appid: orderResult.appid, noncestr: orderResult.nonce_str, partnerid: orderResult.mch_id, prepayid: orderResult.prepay_id, timestamp: "\(timestamp)")
+            var signParam = WxPayAppReqParams(appid: orderResult.appId, noncestr: orderResult.nonceStr, partnerid: orderResult.mchId, prepayid: orderResult.prepayId, timestamp: "\(timestamp)")
             let sign = try WxPaySign.sign(dic: MirrorExt.generateDic(model: signParam), key: self.mchSecret, signType: self.signType).uppercased()
             signParam.sign = sign
             return signParam

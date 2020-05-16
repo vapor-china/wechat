@@ -6,59 +6,68 @@
 //
 
 import Vapor
+import Coda
 
-public struct WxPayCallbackResp: Content {
-          
-    let appid: String
-    let mch_id: String
-    let device_info: String?
-    let nonce_str: String
-    public let sign: String
-    let sign_type: String?
-    let result_code: String
-    let err_code: String?
-    let err_code_des: String?
-    public let openid: String
-    let is_subscribe: String
-    let trade_type: String
-    let bank_type: String
-    let total_fee: Int
-    let settlement_total_fee: Int?
-    let fee_type: String?
-    let cash_fee: Int
-    let cash_fee_type: String?
-    let coupon_fee: Int?
-    let coupon_count: Int?
-    let transaction_id: String
-    let out_trade_no: String
-    public let attach: String?
-    let time_end: String
-    
-    public var appId: String { appid }
-    public var mchId: String { mch_id }
-    public var deviceInfo: String? { device_info }
-    public var nonceStr: String { nonce_str }
-    public var signType: String? { sign_type }
-    public var resultCode: String { result_code }
-    public var errCode: String? { err_code }
-    public var errCodeDes: String? { err_code_des }
-    public var isSubscribe: String { is_subscribe }
-    public var tradeType: String { trade_type }
-    public var bankType: String { bank_type }
-    public var totalFee: Int { total_fee }
-    public var settlementTotalFee: Int? { settlement_total_fee }
-    public var feeType: String? { fee_type }
-    public var cashFee: Int { cash_fee }
-    public var cashFeeType: String? { cash_fee_type }
-    public var couponFee: Int? { coupon_fee }
-    public var couponCount: Int? { coupon_count }
-    public var transactionId: String { transaction_id }
-    public var outTradeNo: String { out_trade_no }
-    public var timeEnd: String { time_end }
-    
+public struct WxPayCallbackResp: Content, CodableModel {
+    @Coda(name: "appid", defaultValue: "")
+    public var appId: String
+    @Coda(name: "mch_id", defaultValue: "")
+    public var mchId: String
+    @Coda(name: "device_info", defaultValue: nil)
+    public var deviceInfo: String?
+    @Coda(name: "nonce_str", defaultValue: "")
+    public var nonceStr: String
+    @Coda(name: "sign", defaultValue: "")
+    public var sign: String
+    @Coda(name: "sign_type", defaultValue: nil)
+    public var signType: String?
+    @Coda(name: "result_code", defaultValue: "")
+    public var resultCode: String
+    @Coda(name: "err_code", defaultValue: nil)
+    public var errCode: String?
+    @Coda(name: "err_code_des", defaultValue: nil)
+    public var errMsg: String?
+    @Coda(name: "openid", defaultValue: "")
+    public var openId: String
+    @Coda(name: "is_subscribe", defaultValue: "")
+    public var isSubscribe: String
+    @Coda(name: "trade_type", defaultValue: "")
+    public var tradeType: String
+    @Coda(name: "bank_type", defaultValue: "")
+    public var bankType: String
+    @Coda(name: "total_fee", defaultValue: 0)
+    public var totalFee: Int
+    @Coda(name: "settlement_total_fee", defaultValue: nil)
+    public var settlementTotalFee: Int?
+    @Coda(name: "fee_type", defaultValue: nil)
+    public var feeType: String?
+    @Coda(name: "cash_fee", defaultValue: 0)
+    public var cashFee: Int
+    @Coda(name: "cash_fee_type", defaultValue: nil)
+    public var cashFeeType: String?
+    @Coda(name: "coupon_fee", defaultValue: nil)
+    public var couponFee: Int?
+    @Coda(name: "coupon_count", defaultValue: nil)
+    public var couponCount: Int?
+    @Coda(name: "transaction_id", defaultValue: "")
+    public var transactionId: String
+    @Coda(name: "out_trade_no", defaultValue: "")
+    public var outTradeNo: String
+    @Coda(name: "attach", defaultValue: nil)
+    public var attach: String?
+    @Coda(name: "time_end", defaultValue: "")
+    public var timeEnd: String
 
-    let return_code: String
-    let return_msg: String?
+    
+    @Coda(name: "return_code", defaultValue: "")
+    public var returnCode: String
+     @Coda(name: "return_msg", defaultValue: nil)
+    public var returnMsg: String?
+    
+    public init(from decoder: Decoder) throws {
+        try deco(decoder: decoder)
+    }
+    
 }
 
 extension WxPayCallbackResp {
@@ -69,9 +78,9 @@ extension WxPayCallbackResp {
 extension WxPayCallbackResp {
     
     var isConnectSuccess: Bool {
-        return return_code == SUCCESS_KEY
+        return returnCode == SUCCESS_KEY
     }
     var isTransactionSuccess: Bool {
-        return result_code == SUCCESS_KEY
+        return resultCode == SUCCESS_KEY
     }
 }

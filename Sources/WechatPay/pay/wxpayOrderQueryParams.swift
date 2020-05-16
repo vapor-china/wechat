@@ -6,14 +6,16 @@
 //
 
 import Vapor
+import Coda
 
 public class WxPayOrderQueryPramas: WxParams {
-    public init(transaction_id: String? = nil, out_trade_no: String? = nil) {
-        self.transaction_id = transaction_id
-        self.out_trade_no = out_trade_no
+    public init(transactionId: String? = nil, outTradeNo: String? = nil) {
+        self.transaction_id = transactionId
+        self.out_trade_no = outTradeNo
     }
-    
+    @Coda(name: "transaction_id", defaultValue: nil)
     var transaction_id: String?
+    @Coda(name: "out_trade_no", defaultValue: nil)
     var out_trade_no: String?
 }
 

@@ -9,22 +9,22 @@ import Vapor
 
 public class WxPayUnifiedOrderPramas: WxPayParam {
     
-public init(out_trade_no: String, device_info: String? = nil, body: String, detail: String? = nil, attach: String? = nil, fee_type: String? = nil, total_fee: Int, spbill_create_ip: String, time_start: String? = nil, time_expire: String? = nil, goods_tag: String? = nil, notify_url: String, trade_type: WxPayConst.TradeType, limit_pay: String? = nil, receipt: String? = nil) {
-        self.device_info = device_info
+public init(outTradeNo: String, deviceInfo: String? = nil, body: String, detail: String? = nil, attach: String? = nil, feeType: String? = nil, totalFee: Int, spbillCreateIp: String, timeStart: String? = nil, timeExpire: String? = nil, goodsTag: String? = nil, notifyUrl: String, tradeType: WxPayConst.TradeType, limitPay: String? = nil, receipt: String? = nil) {
+        self.device_info = deviceInfo
         self.body = body
         self.detail = detail
         self.attach = attach
-        self.fee_type = fee_type
-        self.total_fee = total_fee
-        self.spbill_create_ip = spbill_create_ip
-        self.time_start = time_start
-        self.time_expire = time_expire
-        self.goods_tag = goods_tag
-        self.notify_url = notify_url
-        self.trade_type = trade_type.rawValue
-        self.limit_pay = limit_pay
+        self.fee_type = feeType
+        self.total_fee = totalFee
+        self.spbill_create_ip = spbillCreateIp
+        self.time_start = timeStart
+        self.time_expire = timeExpire
+        self.goods_tag = goodsTag
+        self.notify_url = notifyUrl
+        self.trade_type = tradeType.rawValue
+        self.limit_pay = limitPay
         self.receipt = receipt
-        super.init(out_trade_no: out_trade_no)
+        super.init(outTradeNo: outTradeNo)
     }
     
     public var device_info: String? // 商品描述交易字段

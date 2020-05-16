@@ -8,15 +8,15 @@
 import Foundation
 import Vapor
 import CryptoKit
-
+import Coda
 
 public protocol WxParams: class {}
 
 public class WxPayParam: WxParams {
-    public init(out_trade_no: String) {
-        self.out_trade_no = out_trade_no
+    public init(outTradeNo: String) {
+        self.out_trade_no = outTradeNo
     }
-    
+    @Coda(name: "out_trade_no", defaultValue: "")
     public var out_trade_no: String // 商户系统内部订单号，
 }
 

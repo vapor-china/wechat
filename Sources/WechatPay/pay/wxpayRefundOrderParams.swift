@@ -8,16 +8,16 @@
 import Vapor
 
 public class WxPayRefundOrderParams: WxParams {
-    public init(transaction_id: String? = nil, out_trade_no: String? = nil, out_refund_no: String, total_fee: Int, refund_fee: Int, refund_fee_type: String? = nil, refund_desc: String? = nil, refund_account: String? = nil, notify_url: String? = nil) {
-        self.transaction_id = transaction_id
-        self.out_trade_no = out_trade_no
-        self.out_refund_no = out_refund_no
-        self.total_fee = total_fee
-        self.refund_fee = refund_fee
-        self.refund_fee_type = refund_fee_type
-        self.refund_desc = refund_desc
-        self.refund_account = refund_account
-        self.notify_url = notify_url
+    public init(transactionId: String? = nil, outTradeNo: String? = nil, outRefundNo: String, totalFee: Int, refundFee: Int, refundFeeType: String? = nil, refundDesc: String? = nil, refundAccount: String? = nil, notifyUrl: String? = nil) {
+        self.transaction_id = transactionId
+        self.out_trade_no = outTradeNo
+        self.out_refund_no = outRefundNo
+        self.total_fee = totalFee
+        self.refund_fee = refundFee
+        self.refund_fee_type = refundFeeType
+        self.refund_desc = refundDesc
+        self.refund_account = refundAccount
+        self.notify_url = notifyUrl
     }
     
     public let transaction_id: String?

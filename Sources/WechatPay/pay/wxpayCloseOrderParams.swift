@@ -34,18 +34,6 @@ public struct WxPayCloseOrderResp: Content {
     @Coda(name: "err_code_des", defaultValue: nil)
     public var errMsg: String?
     
-    public init(returnCode: String, returnMsg: String?, appId: String, mchId: String, nonceStr: String, sign: String, resultCode: String, resultMsg: String, errCode: String?, errMsg: String?) {
-        self.returnCode = returnCode
-        self.returnMsg = returnMsg
-        self.appId = appId
-        self.mchId = mchId
-        self.nonceStr = nonceStr
-        self.sign = sign
-        self.resultCode = resultCode
-        self.resultMsg = resultMsg
-        self.errCode = errCode
-        self.errMsg = errMsg
-    }
 }
 
 extension WxPayCloseOrderResp: CodableModel {

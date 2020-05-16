@@ -20,6 +20,15 @@
         }
       },
       {
+        "package": "coda-wrapper",
+        "repositoryURL": "https://github.com/vapor-china/coda-wrapper.git",
+        "state": {
+          "branch": null,
+          "revision": "2d6013d96f4090bbdb5f5acf409da96d4f35798c",
+          "version": "1.0.0"
+        }
+      },
+      {
         "package": "console-kit",
         "repositoryURL": "https://github.com/vapor/console-kit.git",
         "state": {
