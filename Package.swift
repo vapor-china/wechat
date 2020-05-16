@@ -13,12 +13,14 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0-rc"),
-        .package(url: "https://github.com/apple/swift-crypto.git", from: "1.0.1")
+        .package(url: "https://github.com/apple/swift-crypto.git", from: "1.0.1"),
+        .package(url: "https://github.com/vapor-china/coda-wrapper.git", from: "1.0.0")
     ],
     targets: [
         .target(name: "WechatPay", dependencies: [
             .product(name: "Vapor", package: "vapor"),
-            .product(name: "Crypto", package: "swift-crypto")
+            .product(name: "Crypto", package: "swift-crypto"),
+            .product(name: "Coda", package: "coda-wrapper")
         ])
     ]
 )
