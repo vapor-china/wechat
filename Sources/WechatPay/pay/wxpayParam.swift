@@ -41,7 +41,7 @@ extension WxParams {
 extension WxPayClient {
     
     func generateParams<T: WxParams>(param: T) throws -> [String: String] {
-        
+        guard canAuth else { throw WxPayError(reason: "can not use wechat pay, maybe some key or secret not set") }
         var dics = MirrorExt.generateDic(model: param)
         
         dics["appid"] = appId
@@ -52,7 +52,7 @@ extension WxPayClient {
         }
         dics["nonce_str"] = nonceStr
         
-       let sign = try WxPaySign.sign(dic: dics, key: mchSecret, signType: signType)
+       let sign = try WxPaySign.sign(dic: dics, mchSecret: mchSecret, signType: signType)
         
         dics["sign"] = sign
         

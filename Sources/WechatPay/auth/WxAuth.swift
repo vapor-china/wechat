@@ -10,9 +10,11 @@ import Vapor
 
 extension WxPayClient {
     
-    public func FetchAuthAccessToken(_ code: String, req: Request) throws -> EventLoopFuture<AccessTokenResp> {
+    func fetchAuthAccessToken(_ code: String, req: Request) throws -> EventLoopFuture<AccessTokenResp> {
         
-        let txAuthReq = AccessTokenReq(appId: appId, secret: appSecret, code: code)
+        guard canAuth else { throw WxPayError(reason: "can not fetch user login access token") }
+        
+        let txAuthReq = AccessTokenReq(appId: appId, secret: appSecret!, code: code)
         
          return req.client.get(URI(string: WxPayConst.Url.oauth2Access.str)) { (req) in
             try req.query.encode(txAuthReq)
@@ -25,7 +27,7 @@ extension WxPayClient {
     
     
     
-    public func FetchAuthUserInfo(access token: String, openId: String, req: Request) throws -> EventLoopFuture<WxUserInfo> {
+    func fetchAuthUserInfo(access token: String, openId: String, req: Request) throws -> EventLoopFuture<WxUserInfo> {
         
         let txAuthReq = AuthATKOpenIdReq(accessToken: token, openId: openId)
         return req.client.get(URI(string: WxPayConst.Url.userInfo.str)) { (req) in
@@ -37,7 +39,7 @@ extension WxPayClient {
     
     
     
-    public func refreshAccessToken(refresh token: String, req: Request) throws -> EventLoopFuture<AccessTokenResp> {
+    func refreshAccessToken(refresh token: String, req: Request) throws -> EventLoopFuture<AccessTokenResp> {
         let refreshReq = RefreshATKReq(appId: appId, refresh: token)
         
         return req.client.get(URI(string: WxPayConst.Url.refreshATk.str)) { req in
@@ -47,7 +49,7 @@ extension WxPayClient {
         }
     }
     
-    public func checkAccessTokenValid(access token: String, openId: String, req: Request) throws -> EventLoopFuture<CheckValidResp> {
+    func checkAccessTokenValid(access token: String, openId: String, req: Request) throws -> EventLoopFuture<CheckValidResp> {
         let txAuthReq = AuthATKOpenIdReq(accessToken: token, openId: openId)
         return req.client.get(URI(string: WxPayConst.Url.checkATK.str)) { req in
             try req.query.encode(txAuthReq)

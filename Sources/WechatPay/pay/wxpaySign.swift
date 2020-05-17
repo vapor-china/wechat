@@ -11,7 +11,9 @@ import Crypto
 
 public struct WxPaySign {
     
-    public static func sign(dic: [String: String], key: String, signType: WxPayConst.SignType) throws -> String {
+    public static func sign(dic: [String: String], mchSecret: String?, signType: WxPayConst.SignType) throws -> String {
+        
+        guard let key = mchSecret, !key.isEmpty else { throw WxPayError(reason: "can not sign, cause by: mch secret is empty or nil")}
 
         let signStr = generateSignStr(dic: dic)
         
