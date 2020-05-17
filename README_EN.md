@@ -147,4 +147,4 @@ router use post
 
 ## License
 
-AliSMS is released under an MIT license. See [License.md](https://github.com/vapor-china/wechat-pay/blob/master/LICENSE) for more information.
+Wechat is released under an MIT license. See [License.md](https://github.com/vapor-china/wechat/blob/master/LICENSE) for more information.
