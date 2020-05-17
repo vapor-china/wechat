@@ -68,3 +68,11 @@ extension Request.Wechat {
         return try client.refundOrder(params, req: request)
     }
 }
+
+
+extension Request.Wechat {
+    public func payCallback() throws -> WxPayCallbackResp {
+        
+        return try client.dealwithCallback(req: request)
+    }
+}

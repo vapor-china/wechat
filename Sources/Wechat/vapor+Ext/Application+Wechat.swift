@@ -73,6 +73,11 @@ public struct WechatConfiguare {
     public struct MCH {
         let mchId: String
         let mchSecret: String
+        
+        public init(mchId: String, secret: String) {
+            self.mchId = mchId
+            self.mchSecret = secret
+        }
     }
     
     

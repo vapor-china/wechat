@@ -9,21 +9,22 @@
 
 
 
-`Wechat` 是一个基于vapor4的微信SDK。支持 macOS, Ubuntu。
+`Wechat` is a vapor 4 kit of wechat pay service. It support macOS, Ubuntu. You can use the kit to call wechat pay service. 
 
-[English 📔](README_EN.md)
 
-## 安装
+[中文版🇨🇳](README.md)
+
+## Installation
 
 ### Swift Package Manager
 
-要使用苹果的 Swift Package Manager 集成，将以下内容作为依赖添加到你的 `Package.swift`：
+To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
 
 ```swift
 .package(url: "https://github.com/vapor-china/wechat.git", from: "2.0.0")
 ```
 
-这里是一个 `PackageDescription` 实例：
+Here's an example `PackageDescription`:
 
 ```swift
 // swift-tools-version:5.2
@@ -59,29 +60,28 @@ let package = Package(
 )
 ```
 
-## 使用
+## Usage
 
-### 注入wechat
+### register wechat
 ```swift
-        let mch = WechatConfiguare.MCH(mchId: "you mchId", secret: "your mch secret") // 如果不需要使用微信支付，这个可以设为nil
+        let mch = WechatConfiguare.MCH(mchId: "you mchId", secret: "your mch secret") // is optional, if your don't need wechat pay, is can set nil
         let wechatConfig = try WechatConfiguare(appId: "your appid", appSecret: "your app secret", mch: mch)
         app.wechat.use(wechatConfig)
-        
 ```
 
-## 微信授权
+## User
 
-### 获取 access token
+### get access token 
 ```swift 
         try req.wechat.fetchUserAccessToken(code)
 ```
 
-### 获取用户信息
+### get user info
 ```swift
         try req.wechat.getUserInfo(access: atk, openId: openid)
 ```
 
-### 通过code直接获取用户信息示例
+### example code get user info
 ```swift
         try req.wechat.fetchUserAccessToken(code).flatMapThrowing({ (tokenModel) in
             if let errmsg = tokenModel.isErrMsg {
@@ -93,47 +93,48 @@ let package = Package(
         }).flatMap { $0 }
 ```
 
-### 刷新 access token
+### refresh access token
 ```swift 
         try req.wechat.refresh(access: token)
 ```
 
-### 验证access token是否有效
+### valid access token
 ```swift
         req.wechat.valid(access: token, openId: openId)
 ```
 
-## 支付相关
+## Pay
 
-### 支付预下单
+### unified order
 ```swift
         let param = WxPayUnifiedOrderPramas(outTradeNo: "macos\(Int(Date().timeIntervalSince1970))", body: "vapor test", totalFee: 1, spbillCreateIp: "127.0.0.1", notifyUrl: "http://notify.objcoding.com/notify", tradeType: .app)
          
         return try req.wechat.unified(order: param)
 ```
 
-### 查询支付结果
+### query order result
 ```swift 
     let param = WxPayOrderQueryPramas(outTradeNo: "your out trade no")
         try req.wechat.query(order: param)
 ```
 
-### 关闭订单
+### close order
 ```swift
     let param = WxPayCloseOrderParams(outTradeNo: "your out trade no")
     try req.wechat.close(order: param)
 ```
 
-### 退款
+### refund order
 ```swift 
     let param = WxPayRefundOrderParams(outTradeNo: "out trade no", outRefundNo: " out refund no", totalFee: 1, refundFee: 1, refundFeeType: "", refundDesc: "", refundAccount: "", notifyUrl: "http://notify.objcoding.com/notify")
         try req.wechat.refund(order: param)
 ```
 
-### 支付回调解析处理
-router请写post请求
+### notify parse
+router use post
 ```swift 
-     let res = try req.wechat.payCallback()
+
+    let res = try req.wechat.payCallback()
     ······
     if res.isTransactionSuccess {
       return WxPayCallbackReturn.OK.encodeResponse(for: req)
@@ -141,6 +142,7 @@ router请写post请求
       return WxPayCallbackReturn.NotOK(errMsg: "msg").encodeResponse(for: req)
     }   
 ```
+
 
 
 ## License

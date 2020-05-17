@@ -77,10 +77,10 @@ extension WxPayCallbackResp {
 
 extension WxPayCallbackResp {
     
-    var isConnectSuccess: Bool {
+    public var isConnectSuccess: Bool {
         return returnCode == SUCCESS_KEY
     }
-    var isTransactionSuccess: Bool {
+    public var isTransactionSuccess: Bool {
         return resultCode == SUCCESS_KEY
     }
 }
