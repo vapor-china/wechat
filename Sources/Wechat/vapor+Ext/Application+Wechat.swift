@@ -70,14 +70,14 @@ public struct WechatConfiguare {
     let appSecret: String?
     let mch: MCH?
     
-    struct MCH {
+    public struct MCH {
         let mchId: String
         let mchSecret: String
     }
     
     
-    init(appId: String, appSecret: String? = nil, mch: MCH? = nil) throws {
-        guard !appId.isEmpty else { throw WxPayError(reason: "config appid can't is empty")}
+    public init(appId: String, appSecret: String? = nil, mch: MCH? = nil) throws {
+        guard !appId.isEmpty else { fatalError("config appid can't is empty") }
         self.appId = appId
         self.appSecret = appSecret
         self.mch = mch

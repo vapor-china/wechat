@@ -38,11 +38,34 @@ extension WxPayClient {
         return false
     }
     
+    var canAuthErrMsg: String {
+        if appId.isEmpty {
+            return "appid is empty"
+        }
+        guard let secret = appSecret, !secret.isEmpty else {
+            return "appSecret is empty"
+        }
+        return ""
+    }
+    
     var canPay: Bool {
         if !appId.isEmpty, let mchId = mchId, !mchId.isEmpty, let secret = mchSecret, !secret.isEmpty {
             return true
         }
         return false
+    }
+    
+    var canPayErrMsg: String {
+        if appId.isEmpty {
+            return "appid is empty"
+        }
+        guard let mchId = mchId, !mchId.isEmpty else {
+            return "mchId is empty"
+        }
+        guard let secret = mchSecret, !secret.isEmpty else {
+            return "mchSecret is empty"
+        }
+        return ""
     }
 }
 
