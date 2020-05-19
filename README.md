@@ -114,32 +114,32 @@ let package = Package(
 
 ### 查询支付结果
 ```swift 
-    let param = WxPayOrderQueryPramas(outTradeNo: "your out trade no")
+    		let param = WxPayOrderQueryPramas(outTradeNo: "your out trade no")
         try req.wechat.query(order: param)
 ```
 
 ### 关闭订单
 ```swift
-    let param = WxPayCloseOrderParams(outTradeNo: "your out trade no")
-    try req.wechat.close(order: param)
+    		let param = WxPayCloseOrderParams(outTradeNo: "your out trade no")
+    		try req.wechat.close(order: param)
 ```
 
 ### 退款
 ```swift 
-    let param = WxPayRefundOrderParams(outTradeNo: "out trade no", outRefundNo: " out refund no", totalFee: 1, refundFee: 1, refundFeeType: "", refundDesc: "", refundAccount: "", notifyUrl: "http://notify.objcoding.com/notify")
+    		let param = WxPayRefundOrderParams(outTradeNo: "out trade no", outRefundNo: " out refund no", totalFee: 1, refundFee: 1, refundFeeType: "", refundDesc: "", refundAccount: "", notifyUrl: "http://notify.objcoding.com/notify")
         try req.wechat.refund(order: param)
 ```
 
 ### 支付回调解析处理
 router请写post请求
 ```swift 
-     let res = try req.wechat.payCallback()
-    ······
-    if res.isTransactionSuccess {
-      return WxPayCallbackReturn.OK.encodeResponse(for: req)
-    } else {
-      return WxPayCallbackReturn.NotOK(errMsg: "msg").encodeResponse(for: req)
-    }   
+     		let res = try req.wechat.payCallback()
+   				 ······
+    		if res.isTransactionSuccess {
+     			 return WxPayCallbackReturn.OK.encodeResponse(for: req)
+   		  } else {
+      		 return WxPayCallbackReturn.NotOK(errMsg: "msg").encodeResponse(for: req)
+     		}   
 ```
 
 

@@ -107,15 +107,15 @@ let package = Package(
 
 ### unified order
 ```swift
-        let param = WxPayUnifiedOrderPramas(outTradeNo: "macos\(Int(Date().timeIntervalSince1970))", body: "vapor test", totalFee: 1, spbillCreateIp: "127.0.0.1", notifyUrl: "http://notify.objcoding.com/notify", tradeType: .app)
+    let param = WxPayUnifiedOrderPramas(outTradeNo: "macos\(Int(Date().timeIntervalSince1970))", body: "vapor test", totalFee: 1, spbillCreateIp: "127.0.0.1", notifyUrl: "http://notify.objcoding.com/notify", tradeType: .app)
          
-        return try req.wechat.unified(order: param)
+    return try req.wechat.unified(order: param)
 ```
 
 ### query order result
 ```swift 
     let param = WxPayOrderQueryPramas(outTradeNo: "your out trade no")
-        try req.wechat.query(order: param)
+    try req.wechat.query(order: param)
 ```
 
 ### close order
@@ -127,7 +127,7 @@ let package = Package(
 ### refund order
 ```swift 
     let param = WxPayRefundOrderParams(outTradeNo: "out trade no", outRefundNo: " out refund no", totalFee: 1, refundFee: 1, refundFeeType: "", refundDesc: "", refundAccount: "", notifyUrl: "http://notify.objcoding.com/notify")
-        try req.wechat.refund(order: param)
+    try req.wechat.refund(order: param)
 ```
 
 ### notify parse
